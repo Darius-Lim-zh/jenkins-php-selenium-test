@@ -48,7 +48,7 @@
 	
 	if(isset($_POST['submit']))
 	{
-        error_log("Testing to see where this appears");
+        $testing = "Testing to see where this appears";
 		if((isset($_POST['email']) && $_POST['email'] !='') && (isset($_POST['password']) && $_POST['password'] !=''))
 		{
 			$email = trim($_POST['email']);
@@ -89,7 +89,13 @@
 				echo "</div>";
 				unset($errorMsg);
 			}
-			
+			if(isset($testing))
+			{
+				echo "<div class='error-msg'>";
+				echo $testing;
+				echo "</div>";
+				unset($testing);
+			}
 			if(isset($_GET['logout']))
 			{
 				echo "<div class='success-msg'>";

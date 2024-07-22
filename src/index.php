@@ -1,5 +1,39 @@
 <?php 
 	session_start();
+    function isXSS($input) {
+        $xss_patterns = [
+            '/<script.*?>.*?<\\/script.*?>/is', // Script tags
+            '/<.*?on.*?=.*?".*?".*?>/is',       // Event handlers (e.g., onload, onclick)
+            '/<.*?javascript:.*?".*?>/is',      // javascript: in attributes
+        ];
+        foreach ($xss_patterns as $pattern) {
+            if (preg_match($pattern, $input)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function isSQLInjection($input) {
+        $sql_patterns = [
+            '/\' OR \'1\'=\'1/', // Basic SQL injection pattern
+            '/--/',              // SQL comment
+            '/#/',               // SQL comment
+            '/\/\*/',            // SQL comment
+            '/UNION/',           // UNION keyword
+            '/SELECT/',          // SELECT keyword
+            '/INSERT/',          // INSERT keyword
+            '/UPDATE/',          // UPDATE keyword
+            '/DELETE/',          // DELETE keyword
+            '/DROP/',            // DROP keyword
+        ];
+        foreach ($sql_patterns as $pattern) {
+            if (preg_match($pattern, $input)) {
+                return true;
+            }
+        }
+        return false;
+    }
 	
 	if(isset($_POST['submit']))
 	{

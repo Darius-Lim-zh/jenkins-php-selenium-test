@@ -34,6 +34,17 @@
         }
         return false;
     }
+    
+    function isCommonPassword($password) {
+        $passwordListFile = __DIR__ . '/10-million-password-list-top-1000.txt';
+        if (file_exists($passwordListFile)) {
+            $commonPasswords = file($passwordListFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            if (in_array($password, $commonPasswords)) {
+                return true;
+            }
+        }
+        return false;
+    }
 	
 	if(isset($_POST['submit']))
 	{

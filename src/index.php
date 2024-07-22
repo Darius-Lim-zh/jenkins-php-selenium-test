@@ -48,7 +48,7 @@
 	
 	if(isset($_POST['submit']))
 	{
-        echo "Testing to see where this appears";
+        error_log("Testing to see where this appears");
 		if((isset($_POST['email']) && $_POST['email'] !='') && (isset($_POST['password']) && $_POST['password'] !=''))
 		{
 			$email = trim($_POST['email']);

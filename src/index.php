@@ -1,50 +1,50 @@
 <?php 
 	session_start();
-    function isXSS($input) {
-        $xss_patterns = [
-            '/<script.*?>.*?<\\/script.*?>/is', // Script tags
-            '/<.*?on.*?=.*?".*?".*?>/is',       // Event handlers (e.g., onload, onclick)
-            '/<.*?javascript:.*?".*?>/is',      // javascript: in attributes
-        ];
-        foreach ($xss_patterns as $pattern) {
-            if (preg_match($pattern, $input)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	function isXSS($input) {
+		$xss_patterns = [
+			'/<script.*?>.*?<\\/script.*?>/is', // Script tags
+			'/<.*?on.*?=.*?".*?".*?>/is',       // Event handlers (e.g., onload, onclick)
+			'/<.*?javascript:.*?".*?>/is',      // javascript: in attributes
+		];
+		foreach ($xss_patterns as $pattern) {
+			if (preg_match($pattern, $input)) {
+			return true;
+			}
+		}
+		return false;
+	}
     
-    function isSQLInjection($input) {
-        $sql_patterns = [
-            '/\' OR \'1\'=\'1/', // Basic SQL injection pattern
-            '/--/',              // SQL comment
-            '/#/',               // SQL comment
-            '/\/\*/',            // SQL comment
-            '/UNION/',           // UNION keyword
-            '/SELECT/',          // SELECT keyword
-            '/INSERT/',          // INSERT keyword
-            '/UPDATE/',          // UPDATE keyword
-            '/DELETE/',          // DELETE keyword
-            '/DROP/',            // DROP keyword
-        ];
-        foreach ($sql_patterns as $pattern) {
-            if (preg_match($pattern, $input)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	function isSQLInjection($input) {
+		$sql_patterns = [
+			'/\' OR \'1\'=\'1/', // Basic SQL injection pattern
+			'/--/',              // SQL comment
+			'/#/',               // SQL comment
+			'/\/\*/',            // SQL comment
+			'/UNION/',           // UNION keyword
+			'/SELECT/',          // SELECT keyword
+			'/INSERT/',          // INSERT keyword
+			'/UPDATE/',          // UPDATE keyword
+			'/DELETE/',          // DELETE keyword
+			'/DROP/',            // DROP keyword
+		];
+		foreach ($sql_patterns as $pattern) {
+			if (preg_match($pattern, $input)) {
+			return true;
+			}
+		}
+		return false;
+	}
     
-    function isCommonPassword($password) {
-        $passwordListFile = __DIR__ . '/10-million-password-list-top-1000.txt';
-        if (file_exists($passwordListFile)) {
-            $commonPasswords = file($passwordListFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            if (in_array($password, $commonPasswords)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	function isCommonPassword($password) {
+		$passwordListFile = __DIR__ . '/10-million-password-list-top-1000.txt';
+		if (file_exists($passwordListFile)) {
+			$commonPasswords = file($passwordListFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+			if (in_array($password, $commonPasswords)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	if(isset($_POST['submit']))
 	{
